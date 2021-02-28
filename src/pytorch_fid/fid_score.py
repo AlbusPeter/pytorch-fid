@@ -79,7 +79,7 @@ class ImagePathDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, i):
         path = self.files[i]
-        img = Image.open(path).convert('RGB')
+        img = Image.open(path).resize((299,299)).convert('RGB')
         if self.transforms is not None:
             img = self.transforms(img)
         return img
@@ -263,6 +263,8 @@ def main():
         device = torch.device('cuda' if (torch.cuda.is_available()) else 'cpu')
     else:
         device = torch.device(args.device)
+    
+    print("updated version!")
 
     fid_value = calculate_fid_given_paths(args.path,
                                           args.batch_size,
